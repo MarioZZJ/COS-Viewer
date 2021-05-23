@@ -18,7 +18,7 @@ def navigate(prefix=''):
 
     response = client.list_objects(
         Bucket=bucket,
-        Prefix=prefix
+        Prefix=prefix.replace('$','/')
     )
 
     files_list = []
@@ -36,7 +36,7 @@ def navigate(prefix=''):
             if len(files) == 1:
                 current_list.append(files[0])
     else:
-        compat = prefix.split('/')
+        compat = prefix.split('$')
         deep = len(compat)
         for files in files_list:
             if files[:deep] == compat and files[deep] != '':
@@ -46,9 +46,9 @@ def navigate(prefix=''):
     webdir = []
     for dirs in current_list:
         if '.' in dirs:
-            webdir.append(cos_domain + prefix + '/' +dirs)
+            webdir.append(cos_domain + prefix.replace('$','/') + '/' +dirs)
         else:
-            webdir.append(viewer_domain + ((prefix + '/') if prefix else '') + dirs)
+            webdir.append(viewer_domain + ((prefix + '$') if prefix else '') + dirs)
 
     return render_template('list.html',abbrlist = list(zip(current_list,webdir)))
 
