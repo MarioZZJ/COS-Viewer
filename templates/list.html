@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COSViewer</title>
+</head>
+<body>
+<div style="font-size: 30px">
+    <a href="http://d.mariozzj.cn">==根目录==</a><br />
+{% for item in abbrlist %}
+    <a href="{{ item[1] }}">{{ item[0] }}</a><br />
+{% endfor %}
+</div>
+</body>
+</html>
